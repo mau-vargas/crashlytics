@@ -1,0 +1,77 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'io.fabric'
+
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.android.crashlytics"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+
+        gms {
+            sourceSets.main.java.srcDirs = ['src/gms/java', 'src/gms/java/gsm']
+
+            //java {
+               // java.srcDirs = ['src/gms/java']//, 'src/gms/java/gsm'
+            //}
+        }
+
+        hms {
+            sourceSets.main.java.srcDirs = ['src/hms/java', 'src/hms/java/gsm']
+
+            //java {
+           // java.srcDirs 'src/hms/java', 'src/hms/java/hms'
+            //}
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+//GMS
+    gmsImplementation 'com.google.firebase:firebase-analytics:17.4.0'
+    gmsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    gmsImplementation 'com.google.firebase:firebase-core:17.4.0'
+
+//HMS
+    hmsImplementation "com.huawei.agconnect:agconnect-crash:1.2.1.300"
+    hmsImplementation 'com.huawei.agconnect:agconnect-core:1.3.1.300'
+    hmsImplementation 'com.huawei.hms:hianalytics:4.0.3.300'
+    // 4.0.0.300'
+
+}
+
+apply plugin: 'com.huawei.agconnect'
+apply plugin: 'com.google.gms.google-services'
+
+
